@@ -1,3 +1,4 @@
+
 show databases;
 create database BankingDB; 
 use bankingDB;
@@ -99,6 +100,57 @@ select * from accounts;
 select * from accounts order by balance;
 select * from accounts order by balance limit 2;
 select * from accounts order by balance > 10000;
+insert into accounts(AccountID, AccountType, Balance, CustomerID) value(106, "paid", 60000, 6); 
+show tables;
+desc customres;
+desc accounts;
+desc branches;
+insert into branches(branches, branchesname, branchesAddress, branchesphone)
+value (1001, "Dader", "mumbai", 9854756321),(1002, "kotak", "thane", 9542147896),
+(1003, "vasi", "navi mumbai", 9854672159);
+
+select * from accounts;
+#to find the unique account type
+select distinct (AccountType) from accounts;
+#group by 
+select min(balance), accountType from accounts group by accountType;
+select max(balance), accountType from accounts group by accountType;
+select sum(balance), accountType from accounts group by accountType;
+select count(balance), accountType from accounts group by accountType;
+select avg(balance), accountType from accounts group by accountType;
+select min(balance) as minimum_account, max(balance), sum(balance), count(balance), avg(balance),accountType
+from account group by accountType;
+
+select * from customers;
+select * from customers where email is Null;
+select * from customers where lastname is null;
+select * from customers where email is not null;
+
+select * from customers;
+select * from customers where email is null;
+select * from customers where lastname is null;
+select * from customers where firstname  is null;
+insert into loans (loanID, loanamount, StartData, EndDate)
+value (20, 40000, "2025-07-23", "2028-07-20");
+insert into loans (loanID, loanamount, StartData, EndDate)
+value (21, 50000, "2024-07-23", "2027-07-20");
+
+select * from loans where StartDate>"2024-06-20";
+select max(interstRate) from loans;
+select interestrate from loans order by interstRate desc limit 1;
+#cases
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
