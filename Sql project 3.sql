@@ -140,11 +140,109 @@ select max(interstRate) from loans;
 select interestrate from loans order by interstRate desc limit 1;
 #cases
 
+select * from Customers;
+SELECT AccountID, Balance,
+RANK() OVER (ORDER BY Balance DESC) AS Rank_No
+FROM Accounts;
 
+select AccountId, Balance, dense_rank() over 
+(order by balance desc) from accounts;
+update Accounts set  Balance= 70000 where AccountID=104;
+select AccountID, Balance, AccountType, rank() over (partition by AccountType
+ order by Balance desc) typewise_ranking from accounts;
+ select accountID, Balance, accountType, dense_rank() 
+ over (partition by accountType order by Balance desc) typewise_ranking from accounts;
+ select AccountID, Balance, AccountType, percent_rank() over
+ (partition by AccountType order by Balance desc)typewise_ranking from accounts;
 
+# lead and lag without partition
+select AccountId, Balance, lead(Balance) over
+ (order by  Balance Desc) as lead_balance from accounts;
+ select AccountId, Balance, lag(Balance) over
+ (order by  Balance Desc) as lead_balance from accounts;
+ 
+ select AccountID, AccountType, Balance from accounts where AccountType= "Savings" or 
+AccountType= "Current";
+select * from Accounts;
+select AccountID, AccountType, Balance from accounts where AccountType 
+in ("Savings", "Current");
 
+select LoanID, LoanAmount, rank() over
+ (order by LoanAmount desc) from Loans;
+ #with partition Loans table Windows function
+select LoanId, LoanAmount, InterestRate,
+ rank() over (order by LoanAmount desc) as type_wise_ranking
+ from Loans;
+ select LoanId, LoanAmount, InterestRate, percent_rank()
+ over (order by LoanAmount desc)
+as type_wise_ranking from Loans;
+ select LoanID, LoanAmount, lead(LoanAmount) over (order by LoanAmount desc)
+ as lead_LoanAmount from Loans;
+select LoanID, LoanAmount, lag(LoanAmount) over (order by LoanAmount
+ desc) as lead_LoanAmount from Loans;
+ 
+ #having Clause
+ select min(Balance), AccountType from accounts
+ group by AccountType;
+select min(Balance), AccountType from accounts group by 
+AccountType order by min(Balance);
+select min(Balance), AccountType from Accounts group by AccountType
+having (min(Balance)>9000) order by min(Balance);
+select AccountType from accounts group by AccountType;
+select distinct AccountType from accounts;
+select now();
+select current_date();
+select sysdate();
+select * from Transactions;
+insert into Transaction( TransactionID, TransactionDate, Amount, TransactionType)
+values( 1, "2024-08-03",1000000.20,"Cash");
+insert into Transaction( TransactionID, TransactionDate, Amount, TransactionType)
+values( 2, "2024-12-18",13000000.32,"UPI"), (3, "2022-05-02",2500000.56, "Card"),
+(4 , "2023-01-13",2660000.67, "Cash"), (5, "2022-04-17", 50000000.82, "Card"),
+(6, "2020-03-12", 7800000, "UPI");
+select * from Transaction;
 
+#inbutilt function in SQL
+select now();
+select * from Transaction;
+select year(transactionDate) as year_of_creation from Transaction;
+select mounth(transactionDate) as month_of_creation from Transaction;
+select day(transactionDate) as day_of_creation from Transaction;
+select now();
+select current_date();
+select sysdate();
+select current_timestamp();
+select datediff(now(), transactionDate) as total_Days
+from transaction order by tatal_Days limit 1;
 
+select * from loans;
+select datediff(EndDate, StartData) as duration_loan from loans;
+select date_add(now(), interval 6 month);
+select date_add(now(), interval 6 day);
+select transactionID,date_add(accountcreation_Date), interval 6 month)
+as lockinperiod from transaction;
+select greatest(startData, EndDate) from loans;
+select greatest("2026-07-16", "2026-08-16", "2025-08-17") as the_greatest_value from transaction;
+select greatest(450,345,234,567) from accounts limit 1;
+
+#stringfunction
+select upper(firstname), lower(lastname),
+lower(concat(firstname," ",lastname)) as full_name from customers;
+select length(firstname) from customers;
+select left(firstname, 2), right(firstname,2) from customers;
+#mathfunction
+select 3+5, 3-5, 5*2, 3/4, 7%5;
+select * from accounts;
+update accounts set Balance= Balance-1000 where accountID-101;
+set sql_safe_updates=0;
+select round(207.34, 1), floor(234.23);
+select ceil(207,54), floor(234.53);
+select truncate(207.544,2);
+select round(20.54,1), truncate(20.54,1);
+select abs(-207), abs(207);
+select mod(27, 7), 24%5;
+select power(5,6);
+select exp(5);
 
 
 
