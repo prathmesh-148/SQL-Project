@@ -243,28 +243,27 @@ select abs(-207), abs(207);
 select mod(27, 7), 24%5;
 select power(5,6);
 select exp(5);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+select * from customers;
+select * from accounts;
+#joins 
+select c.customerid, c.firstname, a.balance, a.accountID from customers c
+inner join accounts a
+on c.customerid = a.customerId;
+select c.customerid, c.firstname, a.balance, a.accountID from customers c
+left join accounts a
+on c.customerid = a.customerId;
+select c.customerid, c.firstname, a.balance, a.accountID from customers c
+right join accounts a
+on c.customerid = a.customerId;
+alter table transaction add column accountID int;
+alter table transaction rename column accountID to customerid;
+update transaction set customerid=1 where transactionID=1;
+set sql_safe_updates=0;
+select * from transaction;
+select * from customers;
+insert into customers values (7, "visall", "pothem", "visall@ABCgmail.com", "9856471235", "2026-07-02");
+select c.customerid, c.firstname, t.Amount, t.customerid from customers c
+inner join transaction t on c.customerid = t.customerid where c.customerid=1;
 
 
 
