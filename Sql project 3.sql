@@ -265,6 +265,45 @@ insert into customers values (7, "visall", "pothem", "visall@ABCgmail.com", "985
 select c.customerid, c.firstname, t.Amount, t.customerid from customers c
 inner join transaction t on c.customerid = t.customerid where c.customerid=1;
 
+select c.customerid, c.firstname, c.lastname, t.transactionDate,
+t.Amount from customers c join transaction t
+on c.customerid =t.customerid where t.customerid=2;
+
+#cross join
+select c.customerid, c.firstname, c.lastname, t.transactionDate,
+t.Amount from customers c join transaction t
+on c.customerid =t.customerid where t.customerid;
+select * from transaction;
+
+select c.customerid, sum(t.amount) from customers c
+inner join transaction t on c.customerid= t.customerid
+group by c.customerid;
+
+select max(Balance), accountID, accountType, customerId, AccountType from Accounts group by AccountType
+having (max(Balance)>30000) order by min(Balance);
+select * from accounts;
+
+#SUBQUERY
+select * from accounts having
+balance = (select max(balance) from accounts);
+select max(balance) from accounts;
+
+select * from accounts having
+balance > (select avg(Balance) from accounts);
+
+select * from transaction having
+Amount > (select avg(Amount) from transaction);
+
+select c.*, a.balance from
+customers c inner join accounts a
+on c.customerid = a .customerid
+where balance >(select max(balance) from accounts);
+
+
+
+
+
+
 
 
 
