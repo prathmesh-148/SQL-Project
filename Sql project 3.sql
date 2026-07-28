@@ -298,6 +298,56 @@ select c.*, a.balance from
 customers c inner join accounts a
 on c.customerid = a .customerid
 where balance >(select max(balance) from accounts);
+#stop 2 balance
+create view top_3 as
+select accountID, balance from accounts order by balance desc limit 5;
+select * from top_3 limit 5;
+
+create view top_5 as 
+select accountID, balance from accounts order by balance desc limit 6;
+select * from top_5 limit 6;
+
+create view top_2 as
+select customerid, firstname  from customers order by firstname desc limit 4;
+select transactionID, Amount from transaction order by Amount desc limit 4;
+
+select * from top_2 limit 4;
+CREATE VIEW top_5 AS
+SELECT c.customerid, c.firstname, t.transactionID, t.Amount
+FROM customers c JOIN transaction t
+ON c.customerid = t.customerid
+ORDER BY t.Amount DESC
+LIMIT 4;
+select * from top_2;
+create index idx_firstname on customers(Customerid);
+describe customers;
+select ifnull(email, "not available") from customers;
+select if(year(now())=2026 , "current year", "previous year");
+select Balance,if(Balance>10000, "maintained", "not Maintained") from accounts;
+select accountID, balance, row_number() over (order by balance)
+from accounts;
+select accountID, balance, sum(balance) over (order by balance)
+from accounts;
+select loanID, loanamount, row_number() over (order by loanamount)
+from loans;
+select loanID, loanamount, sum(loanamount) over (order by loanamount)
+from loans;
+select accountID, balance, accountType, row_number() over (partition by
+accountType order by balance desc)
+from accounts;
+
+select * from transaction;
+select customer.firstname, customer. customerid, transaction.amount
+from customers join transaction
+on customer.customerid = transaction.customerid
+where transaction.amount is null;
+
+select customer.customerid, customer.firstname, accounts.balance, transactions.amount, transactionid
+from customer join transactions
+on customr.customerid = transaction.customerid
+join accounts
+on customer.customerid = accounts.customerid
+where accounts.balance>30000
 
 
 
